@@ -3,6 +3,7 @@ import connectDB from './config/db.js';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
+import authRoutes from './routes/authRoutes.js'
 
 const app = express();
 
@@ -25,3 +26,5 @@ app.listen(PORT, () => {
 app.get('/', (req, res) => {
     res.send(`<h1>Hellolololoo</h1>`);
 })
+
+app.use('/auth', authRoutes);
