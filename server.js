@@ -28,3 +28,9 @@ app.get('/', (req, res) => {
 })
 
 app.use('/auth', authRoutes);
+
+// express error handler
+app.use((err,req,res,next)=>
+    {
+        res.send({message:"error",payload: err})
+    })
