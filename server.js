@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import morgan from 'morgan';
 import authRoutes from './routes/authRoutes.js';
-import slideFormRoutes from './routes/slideFormRoutes.js';
+import slideFormRoutes from './routes/slideRoutes.js';
 
 const app = express();
 
@@ -29,4 +29,4 @@ app.get('/', (req, res) => {
 })
 
 app.use('/auth', authRoutes);
-app.use('/upload', slideFormRoutes);
+app.use('/slide', slideFormRoutes);
