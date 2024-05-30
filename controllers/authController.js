@@ -1,6 +1,7 @@
 import userCredentialModel from "../models/userCredentialModel.js";
 import { comparePassword, hashPassword } from '../helpers/authHelper.js';
 import JWT from "jsonwebtoken";
+import userInterestModel from "../models/userInterestModel.js";
 
 
 export const registerController = async (req, res) => {
@@ -21,6 +22,8 @@ export const registerController = async (req, res) => {
 
         const hashedPassword = await hashPassword(password);
         const user = await userCredentialModel({ username, password: hashedPassword }).save();
+
+        const userInterest = await userInterestModel({ username }).save();
 
         res.status(200).send({ success: true, message: 'User created successfully', user });
 
@@ -51,8 +54,7 @@ export const loginController = async (req, res) => {
                 message: 'Invalid Password'
             })
         }
-        const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: "7d" });
-        console.log('hello');
+        const token = await JWT.sign({ username }, process.env.JWT_SECRET, { expiresIn: "7d" });
         return res.status(200).send({
             success: true,
             message: 'Login Successful',
