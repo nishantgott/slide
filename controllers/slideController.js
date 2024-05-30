@@ -1,4 +1,5 @@
 import userInterestModel from "../models/userInterestModel.js";
+import userProfileModel from "../models/userProfileModel.js";
 
 export const slideInterestFormController = async (req, res) => {
     const { username, addInterest, deleteInterest } = req.body;
@@ -33,8 +34,38 @@ export const slideInterestFormController = async (req, res) => {
         res.status(200).send({ success: true, message: 'Slide updated', updatedUserInterest });
     } catch (error) {
         console.log(error);
-        res.status(500).send('error in updating slide');
     }
-
 }
 
+export const getSlideController = async (req, res) => {
+    const { username } = req.body;
+    try {
+        const slide = await userInterestModel.findOne({ username });
+        res.status(200).send({ success: true, slide });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const getRandomSlideController = async (req, res) => {
+    const { username } = req.body;
+    try {
+        const slide = await userInterestModel.aggregate([
+            { $sample: { size: 1 } }
+        ]);
+        res.status(200).send({ success: true, slide });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export const slideProfileFormController = async (req, res) => {
+    const { username, name, mail, gender, branch, graduation_year } = req.body;
+    try {
+        const userProfile = new userProfileModel({ username, name, mail, gender, branch, graduation_year });
+        await userProfile.save();
+        res.status(200).send({ success: true, message: 'Slide updated', userProfile });
+    } catch (error) {
+        console.log(error);
+    }
+}
