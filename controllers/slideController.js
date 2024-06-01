@@ -69,3 +69,27 @@ export const slideProfileFormController = async (req, res) => {
         console.log(error);
     }
 }
+
+export const slideAllFormController = async (req, res) => {
+    try {
+        const { username, name, mail, gender, branch, graduation_year, addInterest } = req.body;
+        const userProfile = new userProfileModel({ username, name, mail, gender, branch, graduation_year });
+        await userProfile.save();
+        await userInterestModel.findOneAndUpdate(
+            { username },
+            {
+                $addToSet: {
+                    sports: { $each: addInterest.sports },
+                    academics: { $each: addInterest.academics },
+                    skills: { $each: addInterest.skills },
+                    clubs: { $each: addInterest.clubs },
+                    student_chapters: { $each: addInterest.student_chapters },
+                    hobbies: { $each: addInterest.hobbies },
+                }
+            },
+            { new: true }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+}

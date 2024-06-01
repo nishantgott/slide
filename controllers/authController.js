@@ -2,6 +2,7 @@ import userCredentialModel from "../models/userCredentialModel.js";
 import { comparePassword, hashPassword } from '../helpers/authHelper.js';
 import JWT from "jsonwebtoken";
 import userInterestModel from "../models/userInterestModel.js";
+import userProfileModel from "../models/userProfileModel.js";
 
 
 export const registerController = async (req, res) => {
@@ -12,7 +13,7 @@ export const registerController = async (req, res) => {
 
         const existingUser = await userCredentialModel.findOne({ username });
 
-        console.log('here');
+        // console.log('here');
         if (existingUser) {
             return res.status(200).send({
                 success: true,
@@ -24,6 +25,7 @@ export const registerController = async (req, res) => {
         const user = await userCredentialModel({ username, password: hashedPassword }).save();
 
         const userInterest = await userInterestModel({ username }).save();
+        // const userProfile = await userProfileModel({ username, name:"", mail:"", gender:"" }).save();
 
         res.status(200).send({ success: true, message: 'User created successfully', user });
 
