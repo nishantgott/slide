@@ -16,6 +16,7 @@ const Step2 = (props) => {
         })
     }
     const handleGenderChange = (e) => {
+        // console.log(e.target.value);
         props.setProfile({
             ...props.profile,
             gender: e.target.value

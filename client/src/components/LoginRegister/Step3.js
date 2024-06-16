@@ -205,7 +205,7 @@ const Step3 = (props) => {
                 </div>
 
                 <button className="btn btn-primary w-25 py-2 mt-5" type="submit" onClick={() => props.setStep(2)}>Previous</button>
-                <button className="btn btn-primary w-25 py-2 mt-5 ms-5" type="submit" >Submit</button>
+                <button className="btn btn-primary w-25 py-2 mt-5 ms-5" type="submit" onClick={props.handleSubmit} >Submit</button>
             </div>
         </div>
     );

@@ -24,8 +24,8 @@ export const registerController = async (req, res) => {
         const hashedPassword = await hashPassword(password);
         const user = await userCredentialModel({ username, password: hashedPassword }).save();
 
-        const userInterest = await userInterestModel({ username }).save();
-        // const userProfile = await userProfileModel({ username, name:"", mail:"", gender:"" }).save();
+        const userInterest = new userInterestModel({ username });
+        await userInterest.save();
 
         res.status(200).send({ success: true, message: 'User created successfully', user });
 
